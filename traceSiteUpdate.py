@@ -18,14 +18,14 @@ def getLastModifiedTime(url):
     res=ses.get(url)
     return res.headers['Last-Modified']
 
-def notifyLine():
+def notifyLine(id):
     headers = {
         "Authorization": "Bearer " + "hOPLFU4uOXqlTDLQf99mQ1WQDpzt9XFqMOvDNcQdhc5",
         "Content-Type": "application/x-www-form-urlencoded"
     }
-    params = {"message": "小說已更新"}
+    params = {"message": "{name}已更新".format(name=name_dict[id])}
     res=requests.post("https://notify-api.line.me/api/notify",headers=headers, params=params)
-    print(res.status_code)
+    #print(res.status_code)
 
 def evaluateHashValue(timestamp):
     h1=hashlib.md5()
@@ -53,7 +53,7 @@ def start():
                 new_hashvalue=evaluateHashValue(timestamp)
                 if(new_hashvalue!=hashvalue):
                     print('modified')
-                    notifyLine()
+                    notifyLine(id)
                     dbobject.updateData(name_dict[id],new_hashvalue)
                 else:
                     print('not modified')
@@ -63,8 +63,8 @@ def kill_process():
 
 if __name__ == '__main__':
     try:
-        start()
-        #notify()
+        #start()
+        #notifyLine('A')
         #evaluateHashValue()
     except KeyboardInterrupt:
         kill_process()
