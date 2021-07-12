@@ -10,7 +10,6 @@ import pandas as pd
 from params import id_list,name_dict,url_dict
 from manageDataBase import manageDB
 
-path='/Users/jeffery/Desktop/practice/'
 
 class traceSite():
     def __init__(self):
